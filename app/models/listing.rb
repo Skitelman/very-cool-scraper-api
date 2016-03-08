@@ -9,6 +9,7 @@ class Listing < ActiveRecord::Base
     end
   end
 
+
   def self.parse_unit(raw_address)
     address_words = raw_address.split(" ")
     if address_words.last.include?("#") || address_words.last.downcase.include?("floor")
@@ -27,9 +28,11 @@ class Listing < ActiveRecord::Base
     raw_price.gsub("$", "").gsub(",","").to_i
   end
 
-  def safe_save
-    unless Listing.find_by(address: self.address, unit: self.unit, listing_class: self.listing_class)
-      self.save
+  def self.clear_old
+    Listing.all.each do |listing|
+      if listing.created_at < (DateTime.now - 1)
+        listing.destroy
+      end
     end
   end
 
