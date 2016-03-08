@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome</title>
+    <style>
+    .center {
+      margin: auto;
+      width: 60%;
+    }
+    .mid-center {
+      margin: auto;
+      width: 70%;
+    }
+    </style>
+  </head>
+  <body>
+    <h1 class="center"}>StreetEasy's Most Expensive Soho Listings</h1>
+    <br>
+    <p class="mid-center">Below you will find links to API endpoints that contain the street address, unit number, listing url, and price for the 20 most expensive SOHO sales and rentals on StreetEasy<p>
+    <ul class="mid-center">
+      <li><%= link_to "Most Expensive Sales", api_v1_sales_path %></li>
+      <li><%= link_to "Most Expensive Rentals", api_v1_rentals_path %></li>
+    </ul>
+  </body>
+</html>

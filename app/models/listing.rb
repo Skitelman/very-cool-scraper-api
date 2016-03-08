@@ -1,11 +1,21 @@
 class Listing < ActiveRecord::Base
 
   def self.parse_address(raw_address)
-    raw_address.split("#").first.strip
+    address_words = raw_address.split(" ")
+    if address_words.last.include?("#") || address_words.last.downcase.include?("floor")
+      address_words[0...-1].join(" ")
+    else
+      raw_address.strip
+    end
   end
 
   def self.parse_unit(raw_address)
-    raw_address.split("#").last unless raw_address.split("#").size < 2
+    address_words = raw_address.split(" ")
+    if address_words.last.include?("#") || address_words.last.downcase.include?("floor")
+      address_words[-1].gsub("#","")
+    else
+      nil
+    end
   end
 
   def self.parse_url(raw_url)
@@ -17,25 +27,11 @@ class Listing < ActiveRecord::Base
     raw_price.gsub("$", "").gsub(",","").to_i
   end
 
-  # def attributes
-  #   {
-  #     'listing_class': self.listing_class,
-  #     'address': self.address,
-  #     'unit': self.unit,
-  #     'url': self.url,
-  #     'price': self.price
-  #   }
-  # end
-
   def safe_save
     unless Listing.find_by(address: self.address, unit: self.unit, listing_class: self.listing_class)
       self.save
     end
   end
-
-  # def self.all
-  #   @@all
-  # end
 
   def self.sales
     self.all.select{|listing| listing.listing_class == "Sale"}
@@ -55,17 +51,5 @@ class Listing < ActiveRecord::Base
     self.rentals.sort_by{|listing|
       listing.price
     }.reverse[0...20]
-  end
-
-  def self.most_expensive_sales_attributes
-    self.most_expensive_sales.map{|listing|
-      listing.attributes
-    }
-  end
-
-  def self.most_expensive_rentals_attributes
-    self.most_expensive_rentals.map{|listing|
-      listing.attributes
-    }
   end
 end
