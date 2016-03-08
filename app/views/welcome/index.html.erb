@@ -12,15 +12,40 @@
       margin: auto;
       width: 70%;
     }
+    * {
+  	  margin: 0;
+    }
+    html, body {
+    	height: 100%;
+    }
+    .wrapper {
+    	min-height: 100%;
+    	margin: 0 auto -155px; /* the bottom margin is the negative value of the footer's height */
+    }
+    footer, .push {
+    	height: 155px; /* '.push' must be the same height as 'footer' */
+    }
+    /*
+
+    Sticky Footer by Ryan Fait
+    http://ryanfait.com/
+
+    */
     </style>
   </head>
   <body>
-    <h1 class="center"}>StreetEasy's Most Expensive Soho Listings</h1>
-    <br>
-    <p class="mid-center">Below you will find links to API endpoints that contain the street address, unit number, listing url, and price for the 20 most expensive SoHo sales and rentals on StreetEasy<p>
-    <ul class="mid-center">
-      <li><%= link_to "Most Expensive Sales", api_v1_sales_path %></li>
-      <li><%= link_to "Most Expensive Rentals", api_v1_rentals_path %></li>
-    </ul>
+    <div class="wrapper">
+      <h1 class="center"}>StreetEasy's Most Expensive Soho Listings</h1>
+      <br>
+      <p class="mid-center">Below you will find links to API endpoints that contain the street address, unit number, listing url, and price for the 20 most expensive SoHo sales and rentals on StreetEasy<p>
+        <ul class="mid-center">
+          <li><%= link_to "Most Expensive Sales", api_v1_sales_path %></li>
+          <li><%= link_to "Most Expensive Rentals", api_v1_rentals_path %></li>
+        </ul>
+        <div class="push"></div>
+    </div>
+    <div class="footer">
+      By <a href="http://www.smartfunnycool.com">Sam Ghitelman</a>
+    </div>
   </body>
 </html>
